@@ -1,0 +1,12 @@
+export const host = "http://localhost:3000";
+export const loginRoute = `${host}/login`;
+export const logoutRoute = `${host}/logout`;
+export const registerRoute = `${host}/register`;
+export const getTasksRoute = `${host}/tasks`;
+export const createTasksRoute = `${host}/tasks/create`;
+export const deleteTasksRoute = `${host}/tasks/delete`;
+export const toggleTaskRoute = `${host}/tasks/toggle`;
+export const updateTaskRoute = `${host}/tasks/update`;
+export const refreshRoute = `${host}/refresh`;
+export const profileRoute = `${host}/profile`;
+export const uploadImageRoute = `${host}/upload`;
