@@ -31,6 +31,7 @@ git clone https://github.com/quangoku/TodoApp.git
 cd TodoApp
 ### 2. setup env 
 MONGO_URI = 
+
 ACCESS_TOKEN_SECRET = 
 ### 3. Run with docker compose
 docker compose up --build
