@@ -40,7 +40,6 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (validate()) {
-      console.log(values);
       const res = await fetch(loginRoute, {
         method: "post",
         headers: {
