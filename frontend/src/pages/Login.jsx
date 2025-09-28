@@ -8,7 +8,7 @@ import { FcGoogle } from "react-icons/fc";
 export default function Login() {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -27,11 +27,11 @@ export default function Login() {
   }, []);
 
   function validate() {
-    if (!values.username.trim() || !values.password.trim()) {
-      toast.warn("username or password can't be empty");
+    if (!values.email.trim() || !values.password.trim()) {
+      toast.warn("email or password can't be empty");
       return false;
-    } else if (values.username.length < 3 || values.password.length < 3) {
-      toast.warn("username and password length must be atleast 3 ");
+    } else if (values.email.length < 3 || values.password.length < 3) {
+      toast.warn("email and password length must be at least 3");
       return false;
     }
     return true;
@@ -40,13 +40,14 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (validate()) {
+      console.log(values);
       const res = await fetch(loginRoute, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: values.username,
+          email: values.email,
           password: values.password,
         }),
         credentials: "include",
@@ -76,7 +77,7 @@ export default function Login() {
           <img src={react} alt="Icon" className="w-full p-20" />
           <h1 className="text-center">
             <p
-              className="underline text-blue-300"
+              className="underline text-blue-300 cursor-pointer"
               onClick={() => {
                 navigate("/register");
               }}
@@ -89,15 +90,15 @@ export default function Login() {
         <div className=" w-1/2 p-10 space-y-8 mt-5">
           <h1 className="text-4xl font-bold ">Sign up</h1>
           <form onSubmit={handleSubmit} className="flex flex-col gap-10  ">
-            <label htmlFor="username" className=" border-b-1">
+            <label htmlFor="email" className=" border-b-1">
               <input
                 className="h-10 w-full outline-none "
                 type="text"
-                placeholder="Your name"
-                name="username"
-                id="username"
+                placeholder="Email"
+                name="email"
+                id="email"
                 onChange={handleChange}
-                value={values.username}
+                value={values.email}
               />
             </label>
             <label
@@ -117,14 +118,10 @@ export default function Login() {
               </p>
             </label>
 
-            <label htmlFor="remember">
-              <input type="checkbox" id="remember" />
-              Remember me
-            </label>
             <input
               type="submit"
               value={"Login"}
-              className="bg-amber-100 w-20 py-2  cursor-pointer"
+              className="bg-amber-100 w-20 py-2 rounded-sm  cursor-pointer"
             />
             <div>
               <a href="http://localhost:3000/auth/google">

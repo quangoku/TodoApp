@@ -52,7 +52,7 @@ export function googleCallBack(req, res) {
   res.redirect("http://localhost:5173/");
 }
 function generateAccessToken(user) {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "7d" });
 }
 
 let refreshTokens = [];
@@ -76,15 +76,20 @@ export const refresh = (req, res) => {
 
 export const register = async (req, res) => {
   try {
-    const isExist = await User.findOne({ username: req.body.username });
+    const isExist = await User.findOne({ email: req.body.email });
     if (isExist) {
-      return res.status(409).json({ message: "username already exist" });
+      return res.status(409).json({ message: "email already exist" });
     } else {
-      const user = { username: req.body.username, password: req.body.password };
+      const user = {
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+      };
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(user.password, salt);
       const newUser = await User.create({
         username: user.username,
+        email: user.email,
         password: hashedPassword,
       });
       await newUser.save();
@@ -97,17 +102,17 @@ export const register = async (req, res) => {
   }
 };
 export const login = async (req, res) => {
-  const { username, password } = req.body;
-  const data = await User.findOne({ username });
+  const { email, password } = req.body;
+  const data = await User.findOne({ email });
   if (!data) {
     return res.status(404).json({ message: "account is not exist" });
   }
-  const isCorrectPassowrd = await bcrypt.compare(password, data.password);
-  if (!isCorrectPassowrd) {
+  const isCorrectPassword = await bcrypt.compare(password, data.password);
+  if (!isCorrectPassword) {
     return res.status(400).json({ message: "password is incorrect" });
   }
 
-  const user = { id: data.id, username: data.username };
+  const user = { id: data.id, username: data.username, email: data.email };
   const accessToken = generateAccessToken(user);
   const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
   refreshTokens.push(refreshToken);

@@ -7,24 +7,29 @@ export default function Register() {
   const navigate = useNavigate();
   const [values, setValues] = useState({
     username: "",
+    email: "",
     password: "",
     confirmPassword: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       navigate("/");
     }
   }, []);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   function validate() {
-    if (!values.username.trim() || !values.password.trim()) {
-      toast.warn("username or password can't be empty");
+    if (
+      !values.email.trim() ||
+      !values.password.trim() ||
+      !values.username.trim()
+    ) {
+      toast.warn("email or username or password can't be empty");
       return false;
-    } else if (values.username.length < 3 || values.password.length < 3) {
-      toast.warn("username and password length must be atleast 3 ");
+    } else if (values.password.length < 4) {
+      toast.warn("password length must be mroe than 3 ");
       return false;
     } else if (values.password !== values.confirmPassword) {
       toast.warn("confirm password is not the same as password");
@@ -43,6 +48,7 @@ export default function Register() {
         },
         body: JSON.stringify({
           username: values.username,
+          email: values.email,
           password: values.password,
         }),
       });
@@ -82,7 +88,7 @@ export default function Register() {
 
         <div className=" w-1/2 p-10 space-y-8 mt-5">
           <h1 className="text-4xl font-bold ">Register</h1>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-10  ">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5  ">
             <label htmlFor="username" className=" border-b-1">
               <input
                 className="h-10 w-full outline-none "
@@ -94,6 +100,18 @@ export default function Register() {
                 value={values.username}
               />
             </label>
+            <label htmlFor="email" className=" border-b-1">
+              <input
+                className="h-10 w-full outline-none "
+                type="email"
+                placeholder="Email"
+                name="email"
+                id="email"
+                onChange={handleChange}
+                value={values.email}
+              />
+            </label>
+
             <label
               htmlFor="password"
               className=" border-b-1 flex justify-center items-center"
