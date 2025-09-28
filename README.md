@@ -36,16 +36,25 @@ ACCESS_TOKEN_SECRET =
 ### 3. Run with docker compose
 docker compose up --build
 ### 4. Run locally without Docker
+
 Backend: 
+
 cd backend
+
 npm i
+
 npm run dev
+
 Frontend : 
+
 cd frontend
+
 npm i 
+
 npm run dev
 
 ## Security Notes
 
 Never commit .env to repository
+
 Use strong, random secrets for JWT
