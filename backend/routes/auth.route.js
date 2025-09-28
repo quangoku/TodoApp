@@ -3,7 +3,6 @@ import {
   login,
   register,
   logout,
-  refresh,
   googleCallBack,
   profile,
   uploadImg,
@@ -15,12 +14,11 @@ const Router = express.Router();
 
 Router.post("/login", login);
 Router.post("/register", register);
-Router.post("/refresh", refresh);
 Router.post("/logout", logout);
 Router.get("/profile", authentication, profile);
 Router.get(
   "/auth/google",
-  passport.authenticate("google", { scope: ["profile"] })
+  passport.authenticate("google", { scope: ["profile", "email"] })
 );
 Router.get(
   "/auth/google/callback",

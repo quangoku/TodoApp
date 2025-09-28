@@ -69,7 +69,13 @@ export default function Profile() {
           />
 
           <button
-            className={`w-full py-3 rounded-md cursor-pointer text-white font-semibold transition-all duration-300 bg-orange-500 hover:bg-orange-600`}
+            disabled={isLoading}
+            className={`w-full py-3 rounded-md  text-white font-semibold transition-all duration-300 
+    ${
+      isLoading
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-orange-500 hover:bg-orange-600 cursor-pointer"
+    }`}
           >
             {isLoading ? "Uploading" : "Upload new avatar"}
           </button>

@@ -23,11 +23,13 @@ passport.use(
     },
     async function (accessToken, refreshToken, profile, done) {
       try {
-        let user = await User.findOne({ username: profile.displayName });
+        let user = await User.findOne({ email: profile.emails[0].value });
         if (!user) {
           user = await User.create({
             username: profile.displayName,
+            email: profile.emails[0].value,
             photo: profile.photos[0].value,
+            provider: profile.provider,
           });
         }
         return done(null, user);
@@ -41,12 +43,7 @@ passport.use(
 export function googleCallBack(req, res) {
   const user = { id: req.user._id, username: req.user.username };
   const accessToken = generateAccessToken(user);
-  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
-  refreshTokens.push(refreshToken);
   res.cookie("accessToken", accessToken, {
-    httpOnly: true,
-  });
-  res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
   });
   res.redirect("http://localhost:5173/");
@@ -54,25 +51,6 @@ export function googleCallBack(req, res) {
 function generateAccessToken(user) {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "7d" });
 }
-
-let refreshTokens = [];
-
-export const refresh = (req, res) => {
-  const refreshToken = req.cookies.refresh;
-  if (refreshToken == null) return res.sendStatus(401);
-  if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
-  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    const accessToken = generateAccessToken({
-      id: user.id,
-      username: user.username,
-    });
-    res.cookie("accesstoken", accessToken, {
-      httpOnly: true,
-    });
-    res.status(200);
-  });
-};
 
 export const register = async (req, res) => {
   try {
@@ -91,6 +69,7 @@ export const register = async (req, res) => {
         username: user.username,
         email: user.email,
         password: hashedPassword,
+        provider: "credentials",
       });
       await newUser.save();
       return res
@@ -114,27 +93,18 @@ export const login = async (req, res) => {
 
   const user = { id: data.id, username: data.username, email: data.email };
   const accessToken = generateAccessToken(user);
-  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
-  refreshTokens.push(refreshToken);
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
   });
-  res.cookie("refreshToken", refreshToken, {
-    httpOnly: true,
-  });
+
   return res.status(202).json({ message: "login successfully" });
 };
 
 export const logout = (req, res) => {
-  refreshTokens = refreshTokens.filter(
-    (token) => token !== req.cookies.refreshToken
-  );
   res.clearCookie("accessToken", {
     httpOnly: true,
   });
-  res.clearCookie("refreshToken", {
-    httpOnly: true,
-  });
+
   res.sendStatus(204);
 };
 

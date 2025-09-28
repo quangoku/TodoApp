@@ -10,6 +10,7 @@ const userSchema = new Schema(
       default:
         "https://res.cloudinary.com/dy2ihfctd/image/upload/v1756202531/soicodoc_tv5sha.png",
     },
+    provider: String,
   },
   {
     //ko them version key (version key is needed for multiple update tho)

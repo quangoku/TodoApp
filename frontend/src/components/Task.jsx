@@ -6,6 +6,7 @@ import { useState } from "react";
 export default function Task({ task, handleDelete, handleToggle, handleEdit }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(task.title);
+
   function handleSave() {
     handleEdit(task._id, newTitle);
     setIsEditing(false);

@@ -126,7 +126,6 @@ export default function Home() {
 
       if (res.ok) {
         localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
         navigate("/login");
       } else {
         throw new Error("Something went wrong");
