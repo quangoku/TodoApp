@@ -95,6 +95,8 @@ export const login = async (req, res) => {
   const accessToken = generateAccessToken(user);
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
+  secure: true,      
+  sameSite: "none", 
   });
 
   return res.status(202).json({ message: "login successfully" });
