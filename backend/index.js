@@ -27,7 +27,7 @@ app.use("/", authRoute);
 app.use("/tasks", authentication, taskRoute);
 
 // khoi dong app
-app.listen(3000, async () => {
+app.listen(process.env.PORT  ||  3000, async () => {
   await connectDB();
   console.log("server listen at 3000");
 });
