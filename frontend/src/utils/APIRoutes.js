@@ -1,4 +1,4 @@
-export const host = "http://localhost:3000";
+export const host = "https://todoapp-backend-a8qy.onrender.com";
 export const loginRoute = `${host}/login`;
 export const logoutRoute = `${host}/logout`;
 export const registerRoute = `${host}/register`;
