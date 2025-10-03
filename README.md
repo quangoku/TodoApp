@@ -30,7 +30,14 @@ A simple **full-stack To-Do application** with authentication using **JWT**, bui
 git clone https://github.com/quangoku/TodoApp.git
 cd TodoApp
 ### 2. setup env 
-MONGO_URI = 
+MONGO_URI=
+ACCESS_TOKEN_SECRET=
+GG_CLIENT_ID=
+GG_CLIENT_SECRET=
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_SECRET_KEY=
+
 
 ACCESS_TOKEN_SECRET = 
 ### 3. Run with docker compose
