@@ -17,7 +17,9 @@ app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://todoapp-frontend1.onrender.com",
+    // this url is for demo
+    origin: ["https://todoapp-frontend1.onrender.com", "http://localhost:5173"],
+
     credentials: true,
   })
 );
@@ -27,7 +29,7 @@ app.use("/", authRoute);
 app.use("/tasks", authentication, taskRoute);
 
 // khoi dong app
-app.listen(process.env.PORT  ||  3000, async () => {
+app.listen(process.env.PORT || 3000, async () => {
   await connectDB();
   console.log("server listen at 3000");
 });
