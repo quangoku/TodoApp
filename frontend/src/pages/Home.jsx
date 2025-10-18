@@ -142,7 +142,7 @@ export default function Home() {
         style={{ backgroundColor: "#F1ECE6" }}
       >
         <div></div>
-        <header className="text-center text-5xl">TODO</header>
+        <header className="text-center text-5xl  ">TODO</header>
         <div className="flex items-center justify-self-end space-x-4">
           {photo ? (
             <img
@@ -164,7 +164,7 @@ export default function Home() {
             </div>
           )}
           <button
-            className="px-4 py-2 text-lg rounded-lg cursor-pointer hover:text-amber-600 duration-300"
+            className=" py-2 text-lg rounded-lg cursor-pointer hover:text-amber-600 duration-300"
             onClick={handleLogout}
           >
             Logout
@@ -175,7 +175,7 @@ export default function Home() {
       <div>
         <form
           action=""
-          className="text-center"
+          className="text-center flex justify-center"
           onSubmit={(e) => {
             e.preventDefault();
             createTask(title);
@@ -205,9 +205,9 @@ export default function Home() {
 
       <div
         style={{ backgroundColor: "#F1ECE6" }}
-        className="w-2xl  min-h-2/3 mx-auto px-10 rounded-4xl py-3"
+        className=" max-w-2xl min-h-2/3 mx-auto px-10 rounded-4xl py-3 flex "
       >
-        <div className="space-y-8">
+        <div className="space-y-8 flex-1">
           {tasks.map((task) => (
             <Task
               key={task._id}
