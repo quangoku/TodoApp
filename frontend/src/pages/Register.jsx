@@ -71,10 +71,10 @@ export default function Register() {
     setValues({ ...values, [e.target.name]: e.target.value });
   }
   return (
-    <div className=" flex justify-center items-center bg-amber-50  h-screen  ">
-      <div className="bg-white rounded-2xl drop-shadow-2xl w-2/3 h-9/12 p-10  flex">
+    <div className="flex justify-center items-center bg-amber-50 min-h-screen p-4">
+      <div className="bg-white rounded-2xl drop-shadow-2xl w-full md:w-2/3 md:h-9/12 p-6 md:p-10 flex flex-col md:flex-row">
         <p
-          className="absolute underline text-blue-300 cursor-pointer"
+          className="underline text-blue-300 cursor-pointer text-center mb-4 md:absolute md:top-auto md:left-auto md:mb-0"
           onClick={() => {
             navigate("/login");
           }}
@@ -82,16 +82,22 @@ export default function Register() {
           Back to Login
         </p>
 
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2 hidden md:block">
           <img src={react} alt="Icon" className="w-full p-20" />
         </div>
 
-        <div className=" w-1/2 p-10 space-y-8 mt-5">
-          <h1 className="text-4xl font-bold ">Register</h1>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5  ">
-            <label htmlFor="username" className=" border-b-1">
+        <div className="w-full md:w-1/2 p-5 md:p-10 space-y-5 md:space-y-8 mt-5">
+          <h1 className="text-3xl md:text-4xl font-bold text-center md:text-left">
+            Register
+          </h1>
+
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4 md:gap-5"
+          >
+            <label htmlFor="username" className="border-b-1">
               <input
-                className="h-10 w-full outline-none "
+                className="h-10 w-full outline-none"
                 type="text"
                 placeholder="Your name"
                 name="username"
@@ -100,9 +106,10 @@ export default function Register() {
                 value={values.username}
               />
             </label>
-            <label htmlFor="email" className=" border-b-1">
+
+            <label htmlFor="email" className="border-b-1">
               <input
-                className="h-10 w-full outline-none "
+                className="h-10 w-full outline-none"
                 type="email"
                 placeholder="Email"
                 name="email"
@@ -114,26 +121,30 @@ export default function Register() {
 
             <label
               htmlFor="password"
-              className=" border-b-1 flex justify-center items-center"
+              className="border-b-1 flex justify-center items-center"
             >
               <input
-                className="h-10 w-full outline-none "
+                className="h-10 w-full outline-none"
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 name="password"
                 id="password"
                 onChange={handleChange}
               />
-              <p className="cursor-pointer  " onClick={toggleShowPassword}>
+              <p
+                className="cursor-pointer text-sm"
+                onClick={toggleShowPassword}
+              >
                 {showPassword ? "Hide" : "Show"}
               </p>
             </label>
+
             <label
               htmlFor="confirmPassword"
-              className=" border-b-1 flex justify-center items-center"
+              className="border-b-1 flex justify-center items-center"
             >
               <input
-                className="h-10 w-full outline-none "
+                className="h-10 w-full outline-none"
                 type={showConfirmPassword ? "text" : "password"}
                 placeholder="Confirm Password"
                 name="confirmPassword"
@@ -141,17 +152,20 @@ export default function Register() {
                 onChange={handleChange}
               />
               <p
-                className="cursor-pointer  "
+                className="cursor-pointer text-sm"
                 onClick={toggleShowConfirmPassword}
               >
                 {showConfirmPassword ? "Hide" : "Show"}
               </p>
             </label>
-            <input
-              type="submit"
-              value={"Register"}
-              className="bg-amber-100 w-20 py-2  cursor-pointer"
-            />
+
+            <div className="flex justify-center md:justify-start pt-2">
+              <input
+                type="submit"
+                value={"Register"}
+                className="bg-amber-100 w-full max-w-[80px] py-2 cursor-pointer hover:bg-amber-200 transition"
+              />
+            </div>
           </form>
         </div>
       </div>
